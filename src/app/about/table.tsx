@@ -4,6 +4,7 @@ import axios from "axios";
 import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
+  ChevronUpIcon,
 } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
@@ -51,68 +52,40 @@ const Table = () => {
 
   console.log("cityData", cityData)
 
+  // sort funtion ......
 
+  const handleSort = (head) => {
+    // const sortData = cityData.sort((el)=>  );
 
+  }
 
-
-  const TABS = [
-    {
-      label: "All",
-      value: "all",
-    },
-    {
-      label: "Monitored",
-      value: "monitored",
-    },
-    {
-      label: "Unmonitored",
-      value: "unmonitored",
-    },
-  ];
 
   const TABLE_HEAD = ["Country Code", "Cuntries", "City Name", "TimeZone", "Poulation"];
-
-
   return (
-    <Card className="h-full w-full">
-      {/* <CardHeader floated={false} shadow={false} className="rounded-none">
-
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value="all" className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={value} value={value}>
-                  &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
-          <div className="w-full md:w-72">
-            <Input
-              label="Search"
-              icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-            />
-          </div>
-        </div>
-      </CardHeader> */}
+    <Card className="h-full w-full " style={{ marginTop: "100px " }}>
       <CardBody className="overflow-scroll px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
+        <table className="mt-4 w-full h-600px min-w-max table-auto text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head, index) => (
                 <th
                   key={head}
-                  className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
+                  className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-gray-600 bg-gray-500"
                 >
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                    className="flex items-center justify-between gap-2 font-bold text-white  leading-none opacity-90"
                   >
                     {head}{" "}
                     {index !== TABLE_HEAD.length - 1 && (
-                      <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                      <>
+                        {/* <ChevronUpDownIcon strokeWidth={1} className="h-4 w-4" onClick={() => handleSort(head)} /> */}
+                        <ChevronUpIcon className="h-4 w-4" />
+                        <ChevronDownIcon className="h-4 w-4" />
+                      </>
                     )}
+
                   </Typography>
                 </th>
               ))}
@@ -127,8 +100,7 @@ const Table = () => {
                   : "p-4 border-b border-blue-gray-50";
 
                 return (
-                  <tr key={name} >
-
+                  <tr key={name} className="hover:bg-gray-300" >
                     <td className={classes} color="blue-gray" >
                       <Typography
                         variant="small"
@@ -139,7 +111,7 @@ const Table = () => {
                       </Typography>
                     </td>
 
-                    <td className={classes}>
+                    <td className={classes} >
                       <Typography
                         variant="small"
                         color="blue-gray"
@@ -149,7 +121,7 @@ const Table = () => {
                       </Typography>
                     </td>
 
-                    <td className={classes}>
+                    <td className={`${classes} hover:text-blue-700`}>
                       <Link href={`/weather-report?city=${name}`}>
                         <Typography
                           variant="small"

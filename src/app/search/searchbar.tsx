@@ -84,12 +84,6 @@ const SearchBar: React.FC<seachPropData> = ({ loading, setLoading, suggestion, o
         }
     }
 
-
-
-
-
-
-
     return (
         <>
             {/* <form className='max-w-md mx-auto relative'>
@@ -113,7 +107,7 @@ const SearchBar: React.FC<seachPropData> = ({ loading, setLoading, suggestion, o
 
             <div className='search-bar-wrapper'
                 len={suggestion.length}
-            onKeyUp={haqndeAcitveSuggestion}
+                onKeyUp={haqndeAcitveSuggestion}
             >
                 <img className='image' src='https://uxwing.com/wp-content/themes/uxwing/download/01-user_interface/search.png' alt='Search_icon' />
                 <input className='input' value={inputValue}
