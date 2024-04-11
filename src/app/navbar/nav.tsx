@@ -5,7 +5,7 @@ import { MdMyLocation } from "react-icons/md";
 const Nav = () => {
     return (
         <>
-            <nav className="bg-gray-700 fixed top-0 w-full z-10">
+            <nav className="bg-gray-700 sticky top-0 left-0 w-full z-10">
                 <div className="container mx-auto py-4 flex flex-wrap justify-center lg:justify-between items-center">
                     <div className="w-full lg:w-auto mb-3 lg:mb-0 lg:flex-grow">
                         <div className="flex items-center space-x-2">

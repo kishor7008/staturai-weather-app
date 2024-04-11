@@ -5,6 +5,7 @@ import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
   ChevronUpIcon,
+  ChevronDownIcon,
 } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
 import {
@@ -41,8 +42,12 @@ interface CityData {
   // Add other fields if needed
 }
 
+import { useRef } from 'react';
 const Table = () => {
+  const headingRefs = useRef({});
   const [cityData, setCityData] = useState<CityData[]>([]);
+  const [colorUpArraw, setColorUpArraw] = useState(false);
+  const [colorDownArrow, setColorDownArrow] = useState(false);
   useEffect(() => {
     fetch('https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/geonames-all-cities-with-a-population-1000/records?limit=20').
       then((res) => res.json())
@@ -53,16 +58,66 @@ const Table = () => {
   console.log("cityData", cityData)
 
   // sort funtion ......
+  var sortData = "";
+  const handleAscendingOrder = (head) => {
+    console.log("head", head);
+    let sortData; // Define sortData variable
+    if (head === "Country Code") {
+      sortData = [...cityData].sort((a, b) => a.country_code.localeCompare(b.country_code));
+    }
+    if (head === "Cuntries") {
+      sortData = [...cityData].sort((a, b) => a.cou_name_en.localeCompare(b.cou_name_en));
+    }
+    if (head === "City Name") {
+      sortData = [...cityData].sort((a, b) => a.name.localeCompare(b.name));
+    }
+    if (head === "TimeZone") {
+      sortData = [...cityData].sort((a, b) => a.timezone.localeCompare(b.timezone));
+    }
+    if (head === "Poulation") {
+      sortData = [...cityData].sort((a, b) => b.population - a.population);
+    }
+    // console.log("sortData", sortData);
+    headingRefs.current[head].style.color = "black";
+    setCityData(sortData);
+    setColorUpArraw(true);
+    setColorDownArrow(false);
+  };
 
-  const handleSort = (head) => {
-    // const sortData = cityData.sort((el)=>  );
+  const handleDescendingOrder = (head) => {
+    console.log("head", head);
+    let sortData; // Define sortData variable
+    if (head === "Country Code") {
+      sortData = [...cityData].sort((a, b) => b.country_code.localeCompare(a.country_code));
+    }
+    if (head === "Cuntries") {
+      sortData = [...cityData].sort((a, b) => b.cou_name_en.localeCompare(a.cou_name_en));
+    }
+    if (head === "City Name") {
+      sortData = [...cityData].sort((a, b) => b.name.localeCompare(a.name));
+    }
+    if (head === "TimeZone") {
+      sortData = [...cityData].sort((a, b) => b.timezone.localeCompare(a.timezone));
+    }
+    if (head === "Poulation") {
+      sortData = [...cityData].sort((a, b) => a.population - b.population);
+    }
+    // console.log("sortData", sortData);
+    headingRefs.current[head].style.color = "black";
+    setCityData(sortData);
+    setColorUpArraw(false);
+    setColorDownArrow(true);
+  };
 
-  }
+
+
+  // ...................
+
 
 
   const TABLE_HEAD = ["Country Code", "Cuntries", "City Name", "TimeZone", "Poulation"];
   return (
-    <Card className="h-full w-full " style={{ marginTop: "100px " }}>
+    <Card className="h-full w-full ">
       <CardBody className="overflow-scroll px-0">
         <table className="mt-4 w-full h-600px min-w-max table-auto text-left">
           <thead>
@@ -76,13 +131,23 @@ const Table = () => {
                     variant="small"
                     color="blue-gray"
                     className="flex items-center justify-between gap-2 font-bold text-white  leading-none opacity-90"
+
                   >
                     {head}{" "}
-                    {index !== TABLE_HEAD.length - 1 && (
+                    {index !== TABLE_HEAD.length && (
                       <>
-                        {/* <ChevronUpDownIcon strokeWidth={1} className="h-4 w-4" onClick={() => handleSort(head)} /> */}
-                        <ChevronUpIcon className="h-4 w-4" />
-                        <ChevronDownIcon className="h-4 w-4" />
+                        {/* <span>
+                          <ChevronUpIcon className={`h-3 w-4  text-${colorUpArraw ? "black" : "white"}`} onClick={() => handleAscendingOrder(head)} />
+                          <ChevronDownIcon className={`h-3 w-4  text-${colorDownArrow ? "black" : "white"}`} onClick={() => handleDescendingOrder(head)} />
+                        </span> */}
+
+
+                        <span>
+                          <ChevronUpIcon ref={(el) => headingRefs.current[head] = el}
+                            className={"h-3 w-4 text-white"} onClick={() => handleAscendingOrder(head)} />
+                          <ChevronDownIcon ref={(el) => headingRefs.current[head] = el} className={"h-3 w-4 text-white"} onClick={() => handleDescendingOrder(head)}
+                          />
+                        </span>
                       </>
                     )}
 
@@ -157,24 +222,10 @@ const Table = () => {
           </tbody>
         </table>
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Typography variant="small" color="blue-gray" className="font-normal">
-          Page 1 of 10
-        </Typography>
-        <div className="flex gap-2">
-          <Button variant="outlined" size="sm">
-            Previous
-          </Button>
-          <Button variant="outlined" size="sm">
-            Next
-          </Button>
-        </div>
-      </CardFooter>
+
     </Card>
   );
 };
 
 export default Table;
-
-
 

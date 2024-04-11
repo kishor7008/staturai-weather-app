@@ -36,13 +36,13 @@ const WeatherCard = ({ windSpeed, name, humidity, description, icon, minTemp, te
   // Property 'moment' does not exist on type 'Window & typeof globalThis'.ts(2339)
   // any
   // const sunsetNewValue =window.moment(sunset).format("HH:mm a")
-  console.log("icon", sunset, minTemp,temp)
+  console.log("icon", sunset, minTemp, temp)
   return (
     <>
-   
+
       <div className='w-[22rem] min-w-[22rem] h-[30rem] glassCard p-4 bg-gray-500 border border-gray-400 rounded-lg  '>
         <div className='flex w-full just-center, items-center gap-4 mt-12 mb-4'>
-          <img src={`http://openweathermap.org/img/wn/03d@2x.png`}  alt="weather_icon" width={100} />
+          <img src={`http://openweathermap.org/img/wn/03d@2x.png`} alt="weather_icon" width={100} />
           <p className='font-bold text-5xl flex justify-center items-center' >{temp} &deg;C</p>
         </div>
         <div className='font-bold text-center text-x1'>

@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from 'react';
-import SearchBar from './searchbar';
+import ExtraSearchBar from './extrasearchbar';
 
 interface CityData {
     fields: {
@@ -46,7 +46,7 @@ function MainSearch() {
     return (
         <div className="App">
             <h1 style={{ color: "#ff006d" }}>Search Bar</h1>
-            <SearchBar
+            <ExtraSearchBar
                 loading={loading}
                 setLoading={setLoading}
                 suggestion={suggestion}
